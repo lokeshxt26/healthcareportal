@@ -1,0 +1,372 @@
+/* ========================================================
+   AarogyaPlus - Premium Medical & Healthcare Theme Styles
+   100% English, Classic Sliding Auth, Clean Receipt Printing
+   ======================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --primary: #0284c7;
+    --primary-dark: #0369a1;
+    --primary-light: #38bdf8;
+    --secondary: #0d9488;
+    --secondary-dark: #0f766e;
+    --accent: #f59e0b;
+    --danger: #ef4444;
+    --success: #10b981;
+    --surface-dark: #0f172a;
+    --card-bg: rgba(255, 255, 255, 0.95);
+}
+
+* {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #091122;
+    color: #e2e8f0;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Ambient Medical Glow Background */
+.bg-mesh-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background: 
+        radial-gradient(circle at 15% 20%, rgba(14, 165, 233, 0.20) 0%, transparent 45%),
+        radial-gradient(circle at 85% 30%, rgba(20, 184, 166, 0.18) 0%, transparent 45%),
+        radial-gradient(circle at 50% 85%, rgba(56, 189, 248, 0.14) 0%, transparent 50%),
+        linear-gradient(180deg, #070e1b 0%, #0c1833 50%, #081021 100%);
+    pointer-events: none;
+}
+
+/* Background grid pattern */
+.bg-grid-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-size: 32px 32px;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.2), 0 0 20px rgba(14, 165, 233, 0.08);
+}
+
+.glass-dark-panel {
+    background: rgba(15, 23, 42, 0.82);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.5);
+}
+
+.glass-nav {
+    background: rgba(9, 17, 34, 0.88);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+/* Floating animation */
+@keyframes floatGentle {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+}
+
+.animate-float {
+    animation: floatGentle 4s ease-in-out infinite;
+}
+
+/* ========================================================
+   CLASSIC SLIDING LOGIN & REGISTER PANEL (DOUBLE SLIDER)
+   ======================================================== */
+.auth-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(7, 14, 27, 0.82);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.auth-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.auth-container {
+    background-color: #ffffff;
+    border-radius: 22px;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4), 0 0 40px rgba(14, 165, 233, 0.25);
+    position: relative;
+    overflow: hidden;
+    width: 840px;
+    max-width: 95vw;
+    min-height: 560px;
+    transition: transform 0.35s ease;
+    transform: scale(0.92);
+}
+
+.auth-modal-overlay.active .auth-container {
+    transform: scale(1);
+}
+
+.form-container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    padding: 40px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow-y: auto;
+}
+
+/* Sign In Form (Left by default) */
+.sign-in-container {
+    left: 0;
+    width: 50%;
+    z-index: 2;
+}
+
+/* Sign Up Form (Right by default, hidden behind) */
+.sign-up-container {
+    left: 0;
+    width: 50%;
+    opacity: 0;
+    z-index: 1;
+}
+
+/* When right panel is active: slide states */
+.auth-container.right-panel-active .sign-in-container {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.auth-container.right-panel-active .sign-up-container {
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+    animation: show 0.6s;
+}
+
+@keyframes show {
+    0%, 49.99% {
+        opacity: 0;
+        z-index: 1;
+    }
+    50%, 100% {
+        opacity: 1;
+        z-index: 5;
+    }
+}
+
+/* Overlay Sliding Container */
+.overlay-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 100;
+}
+
+.auth-container.right-panel-active .overlay-container {
+    transform: translateX(-100%);
+}
+
+.overlay {
+    background: linear-gradient(135deg, #0284c7 0%, #0d9488 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0 0;
+    color: #ffffff;
+    position: relative;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    transform: translateX(0);
+    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.auth-container.right-panel-active .overlay {
+    transform: translateX(50%);
+}
+
+.overlay-panel {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    text-align: center;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    transform: translateX(0);
+    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.overlay-left {
+    transform: translateX(-20%);
+}
+
+.auth-container.right-panel-active .overlay-left {
+    transform: translateX(0);
+}
+
+.overlay-right {
+    right: 0;
+    transform: translateX(0);
+}
+
+.auth-container.right-panel-active .overlay-right {
+    transform: translateX(20%);
+}
+
+/* Close button for auth modal */
+.auth-close-btn {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    z-index: 200;
+    background: rgba(0, 0, 0, 0.12);
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.auth-close-btn:hover {
+    background: rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+/* Responsive adjustment for auth on small screens */
+@media (max-width: 768px) {
+    .auth-container {
+        min-height: 580px;
+        width: 100%;
+    }
+    .form-container {
+        width: 100%;
+        padding: 24px;
+    }
+    .overlay-container {
+        display: none;
+    }
+    .sign-in-container, .sign-up-container {
+        width: 100%;
+    }
+    .auth-container.right-panel-active .sign-in-container {
+        display: none;
+    }
+    .auth-container.right-panel-active .sign-up-container {
+        transform: none;
+        opacity: 1;
+        display: flex;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.5);
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(56, 189, 248, 0.35);
+    border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(56, 189, 248, 0.65);
+}
+
+/* ========================================================
+   CRISP & CLEAN HOSPITAL RECEIPT PRINTING STYLES
+   ======================================================== */
+@media print {
+    /* Hide everything on page except the receipt modal */
+    body {
+        background: #ffffff !important;
+        color: #0f172a !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* Hide background glows and grid */
+    .bg-mesh-glow, .bg-grid-overlay, header, footer, #toastContainer, 
+    #bookingModal, #medicineDetailModal, #authModalOverlay, #profileModal,
+    main, .no-print {
+        display: none !important;
+    }
+
+    /* Force printable modal visible and full page */
+    #printableSlipModal {
+        display: block !important;
+        position: static !important;
+        background: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 auto !important;
+        width: 100% !important;
+        max-width: 680px !important;
+        box-shadow: none !important;
+    }
+
+    #printableSlipCard {
+        border: 2px solid #0284c7 !important;
+        border-radius: 12px !important;
+        box-shadow: none !important;
+        margin: 20px auto !important;
+        page-break-inside: avoid !important;
+        background: #ffffff !important;
+        color: #0f172a !important;
+    }
+
+    #printableSlipHeader {
+        background: #0284c7 !important;
+        color: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        padding: 24px !important;
+    }
+
+    .print-border-dashed {
+        border-bottom: 2px dashed #94a3b8 !important;
+    }
+}
